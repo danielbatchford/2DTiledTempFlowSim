@@ -4,38 +4,44 @@ import java.util.Random;
 
 public class Tile {
 
-    private float temp;
     private final int maxTemp;
-
-    private boolean blocked;
+    private float temp;
+    private boolean locked;
 
     Tile(float temp, int maxTemp) {
         this.temp = temp;
         this.maxTemp = maxTemp;
+        this.locked = false;
     }
 
     Tile(int maxTemp) {
         this.maxTemp = maxTemp;
-        this.temp = new Random().nextFloat()*maxTemp;
+        this.temp = new Random().nextFloat() * maxTemp;
+        this.locked = false;
     }
 
-    void addTemp(int toAdd){
+    void addTemp(float toAdd) {
         this.temp += toAdd;
     }
 
-    void setTemp(float temp){
-        this.temp = temp;
-    }
-
-    float getTemp(){
+    float getTemp() {
         return this.temp;
     }
 
-    void toggleBlocked(){
-        this.blocked = !this.blocked;
+    void setTemp(float temp) {
+        this.temp = temp;
     }
 
-    boolean isBlocked() {
-        return blocked;
+    void setTempHighOrLow(boolean highOrLow){
+        this.temp = highOrLow ? maxTemp : 0;
+        this.locked = true;
+    }
+
+    boolean isLocked(){
+        return this.locked;
+    }
+
+    void unlock(){
+        this.locked = false;
     }
 }

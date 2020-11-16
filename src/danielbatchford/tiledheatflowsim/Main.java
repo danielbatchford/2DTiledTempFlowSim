@@ -37,18 +37,32 @@ public class Main extends PApplet implements Constants {
         noSmooth();
     }
 
-    public void mousePressed(){
-        tileController.getTiles()[mouseX * DIVS[0] / WIDTH][mouseY * DIVS[1]/ HEIGHT].toggleBlocked();
+    public void mousePressed() {
+        Tile target = tileController.getTiles()[mouseX * DIVS[0] / WIDTH][mouseY * DIVS[1] / HEIGHT];
+        if (target.isLocked()){
+            target.unlock();
+        }
+        else {
+            target.setTempHighOrLow(mouseButton == LEFT);
+        }
     }
 
     public void keyPressed() {
-        if (key == 'p') {
+        switch (key){
+            case 'p':
             if (paused) {
                 loop();
             } else {
                 noLoop();
             }
             paused = !paused;
+            break;
+            case 'r':
+                tileController = new TileController(this);
+                break;
+            default:
+                break;
         }
+
     }
 }
